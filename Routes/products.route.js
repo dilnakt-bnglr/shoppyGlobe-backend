@@ -3,6 +3,7 @@ import {
   getAllProducts,
   getProductById,
   deleteProductById,
+  updateProductById,
 } from "../Controllers/products.controller.js";
 import validateInputs from "../Middlewares/validateProductInput.js";
 
@@ -16,4 +17,6 @@ export function productRoutes(app) {
   app.get("/api/products/:id", getProductById);
   // DELETE- Deleting product by id
   app.delete("/api/products/:id", deleteProductById);
+  // PUT - Updating product by id
+  app.put("/api/products/:id", updateProductById);
 }

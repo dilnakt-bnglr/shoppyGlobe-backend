@@ -77,3 +77,38 @@ export async function deleteProductById(req, res) {
     res.status(500).json({ message: "Internal server error" || error.message });
   }
 }
+
+// Updating product by its id
+export async function updateProductById(req, res) {
+  const productId = req.params.id;
+  const updateFields = {};
+  const fields = ["productName", "price", "description", "stock"];
+
+  fields.forEach((field) => {
+    if (req.body[field] !== undefined) {
+      updateFields[field] = req.body[field];
+    }
+  });
+
+  try {
+    const updatedProduct = await productModel.findByIdAndUpdate(
+      productId,
+      {
+        $set: updateFields,
+      },
+      { new: true },
+    );
+    if (updatedProduct) {
+      res.status(200).json({
+        message: "Product updated successfully",
+        product: updatedProduct,
+      });
+    } else {
+      res
+        .status(400)
+        .json({ message: `Product with id:${productId} not found` });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" || error.message });
+  }
+}
