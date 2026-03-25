@@ -1,4 +1,3 @@
-// Middleware for validation of user registration
 export default function validateInputs(req, res, next) {
   const { userName, password, age, email } = req.body; // Get the user data from request body
 
