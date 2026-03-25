@@ -1,6 +1,7 @@
 import express from "express";
 import dbConnect from "./dbConnection.js";
 import { userRoutes } from "./Routes/users.route.js";
+import { productRoutes } from "./Routes/products.route.js";
 
 // Creating an express server
 const app = new express();
@@ -15,3 +16,4 @@ app.listen(3000, () => {
 });
 
 userRoutes(app);
+productRoutes(app);

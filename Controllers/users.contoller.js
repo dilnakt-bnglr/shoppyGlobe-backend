@@ -17,7 +17,7 @@ export default function createUser(req, res) {
     .save()
     .then((data) => {
       if (!data) {
-        return res.status(400).json({ message: "Cannot add book" });
+        return res.status(400).json({ message: "Cannot add a user" });
       }
       res.status(201).send(user);
     })
