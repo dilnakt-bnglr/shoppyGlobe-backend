@@ -1,6 +1,6 @@
 import userModel from "../Models/users.model.js";
 
-// Creating user in the users table
+// Creating user in the users collection
 export default function createUser(req, res) {
   const { userName, password, age, email } = req.body; // Get the user data from request body
 
@@ -12,7 +12,7 @@ export default function createUser(req, res) {
     email: email,
   });
 
-  // Svaing the user to db and returning the user
+  // Svaing the user to db and returning the user and handling the error
   user
     .save()
     .then((data) => {
