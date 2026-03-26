@@ -50,3 +50,28 @@ export async function addProductToCart(req, res) {
     res.status(500).json({ message: "Internal server error" || error.message });
   }
 }
+
+// Fetching all products from cart
+export async function getAllCartProducts(req, res) {
+  try {
+    const { user } = req; // Getting the user details from request
+    // Getting cart data using user id
+    const cartData = await cartModel.find({ userId: user?.userId });
+    // Error handling if cart is empty
+    if (cartData.length == 0) {
+      return res.status(400).json({ message: "No products in the cart" });
+    }
+
+    // getting the id's of product in cart data
+    const productIds = cartData.map((product) => product.productId);
+
+    // Finding products using product id
+    const products = await productModel.find({
+      _id: { $in: productIds },
+    });
+    // Returning the product data
+    res.status(200).send(products);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+}
