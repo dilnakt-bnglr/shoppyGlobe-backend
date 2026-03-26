@@ -1,3 +1,5 @@
+## ShoppyGlobe Backend
+
 # 1. Clone project
 
 git clone https://github.com/dilnakt-bnglr/shoppyGlobe-backend.git
@@ -11,7 +13,7 @@ npm install
 
 npm start
 
-## 📋 API Endpoints
+## API Endpoints
 
 ### Authentication (Public)
 
