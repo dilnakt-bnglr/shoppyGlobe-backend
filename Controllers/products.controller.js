@@ -12,7 +12,7 @@ export function createProduct(req, res) {
     stock: stock,
   });
 
-  // / Svaing the product to db and returning the product and handling the error
+  // Saving the product to db and returning the product and handling the error
   product
     .save()
     .then((data) => {
