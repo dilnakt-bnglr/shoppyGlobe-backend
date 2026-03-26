@@ -89,10 +89,45 @@ export async function deleteProductByIdFromCart(req, res) {
 
     // Error handling for checking product in cart or not
     if (!deletedItem) {
-      return res.status(404).json({ error: "Item not in your cart" });
+      return res.status(404).json({ error: "Product not in your cart" });
     }
 
     res.status(200).json({ message: "Removed from cart" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" || error.message });
+  }
+}
+
+// Upadting product quantity by ID in the carts collection
+export async function updateProductQuantityById(req, res) {
+  try {
+    const { user } = req; // Getting the user details from request
+    const productId = req.params.id; // // Get the product id from request params
+    const { quantity } = req.body; // Get quantity from request body
+
+    // Error handling for minimum quantity
+    if (quantity < 1) {
+      return res
+        .status(400)
+        .json({ message: "Product Quantiy should be minimum 1" });
+    }
+
+    // Find and update the quantity of product in cart
+    const updatedProduct = await cartModel.findOneAndUpdate(
+      {
+        userId: user.userId,
+        productId: productId,
+      },
+      { $set: { quantity } },
+      { new: true },
+    );
+
+    // Error handling for checking product in cart or not
+    if (!updatedProduct) {
+      return res.status(404).json({ error: "Product not in cart" });
+    }
+    // Returning the updated quantity of cart products
+    res.status(200).send(updatedProduct);
   } catch (error) {
     res.status(500).json({ message: "Internal server error" || error.message });
   }
