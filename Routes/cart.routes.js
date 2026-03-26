@@ -1,6 +1,7 @@
 import {
   addProductToCart,
   getAllCartProducts,
+  deleteProductByIdFromCart,
 } from "../Controllers/cart.controller.js";
 import { authenticateUser } from "../Middlewares/authenticateUser.js";
 
@@ -10,4 +11,6 @@ export default function cartRoutes(app) {
   app.post("/api/cart", authenticateUser, addProductToCart);
   // GET - Fetching products from cart
   app.get("/api/cart/", authenticateUser, getAllCartProducts);
+  // DELETE - Deleting product by id from cart
+  app.delete("/api/cart/:id", authenticateUser, deleteProductByIdFromCart);
 }

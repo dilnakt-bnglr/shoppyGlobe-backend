@@ -75,3 +75,25 @@ export async function getAllCartProducts(req, res) {
     res.status(500).json({ error: "Server error" });
   }
 }
+
+export async function deleteProductByIdFromCart(req, res) {
+  try {
+    const productId = req.params.id; // Get the product id from request params
+    const { user } = req; // Getting the user details from request
+
+    // Find and delete the product from cart
+    const deletedItem = await cartModel.findOneAndDelete({
+      userId: user.userId,
+      productId: productId,
+    });
+
+    // Error handling for checking product in cart or not
+    if (!deletedItem) {
+      return res.status(404).json({ error: "Item not in your cart" });
+    }
+
+    res.status(200).json({ message: "Removed from cart" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" || error.message });
+  }
+}
