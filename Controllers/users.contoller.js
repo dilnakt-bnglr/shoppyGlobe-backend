@@ -51,7 +51,7 @@ export async function userLogin(req, res) {
 
     // Generate the JWT token
     const token = jwt.sign(
-      { userNmae: userName, password: password },
+      { userId: user._id, userNmae: userName, password: password },
       "hiddenekeyforlogin",
       { expiresIn: "1h" },
     );
